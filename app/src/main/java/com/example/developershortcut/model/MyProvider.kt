@@ -1,6 +1,5 @@
 package com.example.developershortcut.model
 
-import android.content.Intent
 import com.example.developershortcut.R
 
 
