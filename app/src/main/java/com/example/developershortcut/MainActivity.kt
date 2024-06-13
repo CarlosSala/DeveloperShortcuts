@@ -61,7 +61,7 @@ fun MainScreen() {
                 NavigationBarItem(
                     icon = {
                         Icon(
-                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_shortcut_24),
+                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_settings_24),
                             contentDescription = "Developer Options"
                         )
                     },
@@ -77,7 +77,7 @@ fun MainScreen() {
                 NavigationBarItem(
                     icon = {
                         Icon(
-                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_shortcut_24),
+                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_settings_24),
                             contentDescription = "About Phone"
                         )
                     },
@@ -92,7 +92,7 @@ fun MainScreen() {
                 NavigationBarItem(
                     icon = {
                         Icon(
-                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_shortcut_24),
+                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_settings_24),
                             contentDescription = "About Phone"
                         )
                     },
@@ -154,7 +154,7 @@ fun MyActions(context: Context, actionModel: ActionModel) {
         ) {
 
             IconButton(modifier = Modifier.fillMaxWidth(),
-                onClick = { myNavigation(context, actionModel.route) }) {
+                onClick = { myNavigation(context, actionModel.route ) }) {
                 Icon(
                     painter = painterResource(id = actionModel.icon),
                     contentDescription = "Favorite Icon",
