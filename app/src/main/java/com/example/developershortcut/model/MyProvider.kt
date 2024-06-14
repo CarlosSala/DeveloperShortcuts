@@ -54,5 +54,15 @@ fun actions() = listOf(
         R.drawable.ic_storage_24,
         android.provider.Settings.ACTION_INTERNAL_STORAGE_SETTINGS,
         "Internal Storage Settings"
+    ), ActionModel(
+        10,
+        R.drawable.ic_info_24,
+        android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS,
+        "Device Info"
+    ), ActionModel(
+        10,
+        R.drawable.ic_accessibility_24,
+        android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS,
+        "Device Info"
     )
 )

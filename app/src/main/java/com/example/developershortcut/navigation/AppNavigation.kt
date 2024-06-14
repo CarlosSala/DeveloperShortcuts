@@ -6,10 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.example.developershortcut.screen.test_one_screen.TestOneScreen
-import com.example.developershortcut.screen.test_three_screen.TestThreeScreen
-import com.example.developershortcut.screen.test_two_screen.TestTwoScreen
+import com.example.developershortcut.screen.one_screen.OneScreen
+import com.example.developershortcut.screen.three_screen.ThreeScreen
+import com.example.developershortcut.screen.two_screen.TwoScreen
 
 
 @Composable
@@ -21,16 +20,16 @@ fun AppNavigation(
 
     NavHost(
         navController = navController,
-        startDestination = AppScreens.TestOneScreen.route
+        startDestination = AppScreens.OneScreen.route
     ) {
-        composable(AppScreens.TestOneScreen.route) {
-            TestOneScreen(context, paddingValues)
+        composable(AppScreens.OneScreen.route) {
+            OneScreen(context, paddingValues)
         }
-        composable(AppScreens.TestTwoScreen.route) {
-            TestTwoScreen()
+        composable(AppScreens.TwoScreen.route) {
+            TwoScreen()
         }
-        composable(AppScreens.TestThreeScreen.route) {
-            TestThreeScreen()
+        composable(AppScreens.ThreeScreen.route) {
+            ThreeScreen()
         }
     }
 }

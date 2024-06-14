@@ -1,4 +1,4 @@
-package com.example.developershortcut.screen.test_two_screen
+package com.example.developershortcut.screen.two_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.sp
 import com.example.developershortcut.R
 
 @Composable
-fun TestTwoScreen() {
+fun TwoScreen() {
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -39,5 +39,5 @@ fun TestTwoScreen() {
 @Preview(showBackground = true)
 @Composable
 fun TestOneScreenPreview() {
-    TestTwoScreen()
+    TwoScreen()
 }

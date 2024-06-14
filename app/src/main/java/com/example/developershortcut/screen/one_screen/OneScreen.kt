@@ -1,4 +1,4 @@
-package com.example.developershortcut.screen.test_one_screen
+package com.example.developershortcut.screen.one_screen
 
 import android.content.Context
 import android.content.Intent
@@ -33,7 +33,7 @@ import com.example.developershortcut.model.ActionModel
 import com.example.developershortcut.model.actions
 
 @Composable
-fun TestOneScreen(context: Context, paddingValues: PaddingValues) {
+fun OneScreen(context: Context, paddingValues: PaddingValues) {
 
     LazyVerticalGrid(
         contentPadding = paddingValues,

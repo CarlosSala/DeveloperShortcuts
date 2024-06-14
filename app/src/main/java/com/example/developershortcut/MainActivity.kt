@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.developershortcut.navigation.AppNavigation
+import com.example.developershortcut.navigation.BottomNavigationBar
 
 
 class MainActivity : ComponentActivity() {
@@ -33,7 +34,6 @@ fun MainScreen() {
     ) { paddingValues ->
 
         AppNavigation(navController, context, paddingValues)
-
     }
 }
 
