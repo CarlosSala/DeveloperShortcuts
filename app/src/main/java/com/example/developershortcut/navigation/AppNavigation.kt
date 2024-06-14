@@ -26,7 +26,7 @@ fun AppNavigation(
             OneScreen(context, paddingValues)
         }
         composable(AppScreens.TwoScreen.route) {
-            TwoScreen()
+            TwoScreen(context, paddingValues)
         }
         composable(AppScreens.ThreeScreen.route) {
             ThreeScreen()

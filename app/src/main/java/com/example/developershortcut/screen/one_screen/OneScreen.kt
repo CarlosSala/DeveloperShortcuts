@@ -29,8 +29,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
-import com.example.developershortcut.model.ActionModel
-import com.example.developershortcut.model.actions
+import com.example.developershortcut.model.ShortcutModel
+import com.example.developershortcut.model.getShortcuts
 
 @Composable
 fun OneScreen(context: Context, paddingValues: PaddingValues) {
@@ -40,18 +40,17 @@ fun OneScreen(context: Context, paddingValues: PaddingValues) {
         // columns = GridCells.Fixed(2)
         columns = GridCells.Adaptive(150.dp),
         horizontalArrangement = Arrangement.spacedBy(2.dp)
-
     ) {
-        items(actions()) { item ->
+        items(getShortcuts()) { item ->
 
-            MyActions(context, item)
+            MyShortcuts(context, item)
         }
     }
 }
 
 
 @Composable
-fun MyActions(context: Context, actionModel: ActionModel) {
+fun MyShortcuts(context: Context, shortcutModel: ShortcutModel) {
 
     Box(
         contentAlignment = Alignment.Center,
@@ -68,16 +67,16 @@ fun MyActions(context: Context, actionModel: ActionModel) {
         ) {
 
             IconButton(modifier = Modifier.fillMaxWidth(),
-                onClick = { myNavigation(context, actionModel.route) }) {
+                onClick = { myNavigation(context, shortcutModel.route) }) {
                 Icon(
-                    painter = painterResource(id = actionModel.icon),
+                    painter = painterResource(id = shortcutModel.icon),
                     contentDescription = "Favorite Icon",
                     tint = Color.DarkGray,
                     modifier = Modifier.size(48.dp)
                 )
             }
             Text(
-                text = actionModel.title,
+                text = shortcutModel.title,
                 modifier = Modifier
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center,
