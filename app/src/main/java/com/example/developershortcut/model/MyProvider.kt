@@ -63,6 +63,6 @@ fun actions() = listOf(
         10,
         R.drawable.ic_accessibility_24,
         android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS,
-        "Device Info"
+        "Accessibility"
     )
 )
