@@ -6,9 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.developershortcut.screen.one_screen.OneScreen
-import com.example.developershortcut.screen.three_screen.ThreeScreen
-import com.example.developershortcut.screen.two_screen.TwoScreen
+import com.example.developershortcut.screen.onescreen.OneScreen
+import com.example.developershortcut.screen.threescreen.ThreeScreen
+import com.example.developershortcut.screen.twoscreen.TwoScreen
 
 
 @Composable

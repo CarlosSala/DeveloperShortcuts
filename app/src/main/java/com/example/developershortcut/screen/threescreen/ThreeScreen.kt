@@ -1,4 +1,4 @@
-package com.example.developershortcut.screen.three_screen
+package com.example.developershortcut.screen.threescreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
