@@ -21,9 +21,6 @@ class SystemInfoViewModel() : ViewModel() {
         var storageUsage = mutableFloatStateOf(0f)
             private set
 
-
-
-
         init {
 
             // Simulating real-time data updates
@@ -45,7 +42,6 @@ class SystemInfoViewModel() : ViewModel() {
 
             return 0f
         }
-
 
         private fun getRamUsage(): Float {
             val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
@@ -70,7 +66,6 @@ class SystemInfoViewModel() : ViewModel() {
     */
     //var systemInfo by mutableStateOf(mapOf<String, String>())
 
-    // Ejemplo de estado inmutable que puede ser observado
     private val _systemInfo = MutableStateFlow<Map<String, String>>(emptyMap())
     var systemInfo = _systemInfo
 
@@ -81,40 +76,55 @@ class SystemInfoViewModel() : ViewModel() {
         }
     }
 
-
     private fun getSystemInfo(context: Context): Map<String, String> {
         val dataInfo = mutableMapOf<String, String>()
 
-        // Device Info
-
-        // Información del dispositivo
-        dataInfo["Fabricante"] = Build.MANUFACTURER
-        dataInfo["Modelo"] = Build.MODEL
-        dataInfo["Producto"] = Build.PRODUCT
+        // device info
+        dataInfo["Manufacturer"] = Build.MANUFACTURER
+        dataInfo["Model"] = Build.MODEL
+        dataInfo["Product"] = Build.PRODUCT
         dataInfo["Hardware"] = Build.HARDWARE
+        dataInfo["User"] = Build.USER
+        dataInfo["Host"] = Build.HOST
+        dataInfo["Type"] = Build.TYPE
+        dataInfo["Brand"] = Build.BRAND
+        dataInfo["Id"] = Build.ID
+        dataInfo["Board"] = Build.BOARD
+        dataInfo["BootLoader"] = Build.BOOTLOADER
+        dataInfo["Display"] = Build.DISPLAY
+        dataInfo["FingerPrint"] = Build.FINGERPRINT
+        dataInfo["ODM_SKU"] = Build.ODM_SKU ?: "N/A"
+        dataInfo["SOC_Manufacturer"] = Build.SOC_MANUFACTURER ?: "N/A"
+        dataInfo["SOC_Model"] = Build.SOC_MODEL ?: "N/A"
+        dataInfo["TAGS"] = Build.TAGS
+        dataInfo["Radio version"] = Build.getRadioVersion() ?: "N/A"
+        //dataInfo["Serial"] = Build.getSerial()  // require specials permissions
+        dataInfo["Time"] = Build.TIME.toString()
+        dataInfo["ABIS"] = Build.SUPPORTED_ABIS.contentToString()
+        dataInfo["32 bits"] = Build.SUPPORTED_32_BIT_ABIS.contentToString()
+        dataInfo["64 bits"] = Build.SUPPORTED_64_BIT_ABIS.contentToString()
+        dataInfo["Partition Name System"] = Build.Partition.PARTITION_NAME_SYSTEM ?: "N/A"
 
-        // Información de la versión de Android
-        dataInfo["Versión de Android"] = "${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})"
-        dataInfo["Versión de la base de banda"] = Build.VERSION.INCREMENTAL
-        dataInfo["Código de versión"] = Build.VERSION.CODENAME
+        // Android info
+        dataInfo["Release"] = Build.VERSION.RELEASE
+        dataInfo["Codename"] = Build.VERSION.CODENAME
+        dataInfo["Incremental"] = Build.VERSION.INCREMENTAL
+        dataInfo["SDK_INT"] = Build.VERSION.SDK_INT.toString()
+        dataInfo["Base_OS"] = Build.VERSION.BASE_OS ?: "N/A"
+        dataInfo["Security_patch"] = Build.VERSION.SECURITY_PATCH ?: "N/A"
+        dataInfo["Media performance class"] = Build.VERSION.MEDIA_PERFORMANCE_CLASS.toString()
+        dataInfo["Upside down cake"] = Build.VERSION_CODES.UPSIDE_DOWN_CAKE.toString()
 
-        // Información de la pantalla
+        // Display info
         val displayMetrics = DisplayMetrics()
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         windowManager.defaultDisplay.getMetrics(displayMetrics)
 
-        dataInfo["Ancho de pantalla"] = "${displayMetrics.widthPixels}px"
-        dataInfo["Alto de pantalla"] = "${displayMetrics.heightPixels}px"
-        dataInfo["Densidad de pantalla"] = "${displayMetrics.densityDpi} dpi"
-        dataInfo["Densidad de pantalla (scaled)"] = "${displayMetrics.density}"
-        dataInfo["Escala de densidad"] = "${displayMetrics.scaledDensity}"
-
-        // Otra información del sistema
-        dataInfo["Nombre del usuario"] = Build.USER
-        dataInfo["Nombre del host"] = Build.HOST
-        dataInfo["Tipo de compilación"] = Build.TYPE
-        dataInfo["Marca"] = Build.BRAND
-        dataInfo["Identificador del producto"] = Build.ID
+        dataInfo["Screen Width"] = "${displayMetrics.widthPixels}px"
+        dataInfo["Screen Height"] = "${displayMetrics.heightPixels}px"
+        dataInfo["Screen Density"] = "${displayMetrics.densityDpi} dpi"
+        dataInfo["Screen Density (scaled)"] = "${displayMetrics.density}"
+        dataInfo["Scaled Density"] = "${displayMetrics.scaledDensity}"
 
         return dataInfo
     }

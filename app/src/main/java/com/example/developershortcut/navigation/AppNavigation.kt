@@ -33,7 +33,7 @@ fun AppNavigation(
                 factory = SystemInfoViewModelFactory(LocalContext.current)
             )
 */
-            SystemInfoScreen()
+            SystemInfoScreen(paddingValues)
         }
     }
 }
