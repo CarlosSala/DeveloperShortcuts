@@ -60,7 +60,7 @@ fun Info(
     Card(
         modifier = Modifier
             .padding(1.dp)
-            .fillMaxWidth(0.9f)
+            .fillMaxWidth(0.95f)
     ) {
         Column(
             modifier = Modifier.padding(vertical = 24.dp, horizontal = 32.dp)

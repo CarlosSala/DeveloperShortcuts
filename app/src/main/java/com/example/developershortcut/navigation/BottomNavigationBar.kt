@@ -13,8 +13,11 @@ import com.example.developershortcut.R
 
 
 @Composable
-fun BottomNavigationBar(navController: NavController) {
-
+fun BottomNavigationBar(
+    // navController: NavController,
+    selectedScreen: AppScreens,
+    onItemSelected: (AppScreens) -> Unit
+) {
     NavigationBar {
         NavigationBarItem(
             icon = {
@@ -25,16 +28,18 @@ fun BottomNavigationBar(navController: NavController) {
                 )
             },
             label = { Text("Shortcuts") },
-            selected = false,
-            onClick = { navController.navigate(AppScreens.OneScreen.route) })
-
+            selected = selectedScreen == AppScreens.OneScreen,
+            onClick = { onItemSelected(AppScreens.OneScreen) }
+            // onClick = { navController.navigate(AppScreens.OneScreen.route) }
+        )
         NavigationBarItem(
             icon = {
                 Icon(Icons.Filled.Home, contentDescription = null)
             },
             label = { Text("Actions") },
-            selected = false,
-            onClick = { navController.navigate(AppScreens.TwoScreen.route) })
+            selected = selectedScreen == AppScreens.TwoScreen,
+            onClick = { onItemSelected(AppScreens.TwoScreen) }
+        )
 
         NavigationBarItem(
             icon = {
@@ -44,8 +49,8 @@ fun BottomNavigationBar(navController: NavController) {
                 )
             },
             label = { Text("Others") },
-            selected = false,
-            onClick = { navController.navigate(AppScreens.ThreeScreen.route) })
-
+            selected = selectedScreen == AppScreens.ThreeScreen,
+            onClick = { onItemSelected(AppScreens.ThreeScreen) }
+        )
     }
 }
