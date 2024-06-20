@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.developershortcut.navigation.AppNavigation
 import com.example.developershortcut.navigation.BottomNavigationBar
+import com.example.developershortcut.navigation.SplashNavigation
 
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +18,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
 
-            MainScreen()
+            SplashNavigation()
         }
     }
 }

@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.developershortcut.screen.onescreen.ShortcutsScreen
+import com.example.developershortcut.screen.splashscreen.SplashScreen
 import com.example.developershortcut.screen.threescreen.SystemInfoScreen
 import com.example.developershortcut.screen.twoscreen.IntentActionsScreen
 
