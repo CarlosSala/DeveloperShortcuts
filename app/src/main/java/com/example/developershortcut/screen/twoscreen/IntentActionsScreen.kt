@@ -1,4 +1,4 @@
-package com.example.developershortcut.screen.onescreen
+package com.example.developershortcut.screen.twoscreen
 
 import android.content.Context
 import android.content.Intent
@@ -29,28 +29,32 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
-import com.example.developershortcut.model.ShortcutModel
-import com.example.developershortcut.model.getShortcuts
+import com.example.developershortcut.model.IntentActionModel
+import com.example.developershortcut.model.getActions
 
 @Composable
-fun OneScreen(context: Context, paddingValues: PaddingValues) {
+fun IntentActionsScreen(context: Context, paddingValues: PaddingValues) {
 
     LazyVerticalGrid(
+        // columns = GridCells.Adaptive(150.dp),
+        columns = GridCells.Fixed(2),
+        modifier = Modifier.padding(16.dp),
         contentPadding = paddingValues,
-        // columns = GridCells.Fixed(2)
-        columns = GridCells.Adaptive(150.dp),
-        horizontalArrangement = Arrangement.spacedBy(2.dp)
-    ) {
-        items(getShortcuts()) { item ->
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        content = {
+            items(getActions()) { item ->
 
-            MyShortcuts(context, item)
+                // Log.d("MyLazyVerticalGrid", "Item in list: $item")
+                MyActions(context = context, intentActionModel = item)
+            }
         }
-    }
+    )
 }
 
 
 @Composable
-fun MyShortcuts(context: Context, shortcutModel: ShortcutModel) {
+fun MyActions(context: Context, intentActionModel: IntentActionModel) {
 
     Box(
         contentAlignment = Alignment.Center,
@@ -67,16 +71,21 @@ fun MyShortcuts(context: Context, shortcutModel: ShortcutModel) {
         ) {
 
             IconButton(modifier = Modifier.fillMaxWidth(),
-                onClick = { myNavigation(context, shortcutModel.route) }) {
+                onClick = {
+                    myNavigation(
+                        context,
+                        intentActionModel
+                    )
+                }) {
                 Icon(
-                    painter = painterResource(id = shortcutModel.icon),
+                    painter = painterResource(id = intentActionModel.icon),
                     contentDescription = "Favorite Icon",
                     tint = Color.DarkGray,
                     modifier = Modifier.size(48.dp)
                 )
             }
             Text(
-                text = shortcutModel.title,
+                text = intentActionModel.name,
                 modifier = Modifier
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center,
@@ -87,15 +96,16 @@ fun MyShortcuts(context: Context, shortcutModel: ShortcutModel) {
     }
 }
 
-fun myNavigation(context: Context, route: String) {
+fun myNavigation(context: Context, intentActionModel: IntentActionModel) {
 
-    val intent = Intent(route)
-    startActivity(context, intent, null)
+    startActivity(
+        context,
+        Intent.createChooser(intentActionModel.intent, "Choose an email client:"),
+        null
+    )
 }
-
 
 @Preview(showBackground = true)
 @Composable
 fun TestOneScreenPreview() {
-
 }

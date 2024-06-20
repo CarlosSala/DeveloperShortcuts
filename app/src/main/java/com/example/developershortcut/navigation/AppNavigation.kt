@@ -6,9 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.developershortcut.screen.onescreen.OneScreen
-import com.example.developershortcut.screen.threescreen.ThreeScreen
-import com.example.developershortcut.screen.twoscreen.TwoScreen
+import com.example.developershortcut.screen.onescreen.ShortcutsScreen
+import com.example.developershortcut.screen.threescreen.SystemInfoScreen
+import com.example.developershortcut.screen.twoscreen.IntentActionsScreen
 
 
 @Composable
@@ -23,13 +23,17 @@ fun AppNavigation(
         startDestination = AppScreens.OneScreen.route
     ) {
         composable(AppScreens.OneScreen.route) {
-            OneScreen(context, paddingValues)
+            ShortcutsScreen(context, paddingValues)
         }
         composable(AppScreens.TwoScreen.route) {
-            TwoScreen(context, paddingValues)
+            IntentActionsScreen(context, paddingValues)
         }
         composable(AppScreens.ThreeScreen.route) {
-            ThreeScreen()
+/*            *//*val viewModel: SystemInfoViewModel = viewModel(
+                factory = SystemInfoViewModelFactory(LocalContext.current)
+            )
+*/
+            SystemInfoScreen()
         }
     }
 }
