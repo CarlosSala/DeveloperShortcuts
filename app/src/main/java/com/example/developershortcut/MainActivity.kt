@@ -16,6 +16,7 @@ import com.example.developershortcut.navigation.AppNavigation
 import com.example.developershortcut.navigation.AppScreens
 import com.example.developershortcut.navigation.BottomNavigationBar
 import com.example.developershortcut.navigation.SplashNavigation
+import com.example.developershortcut.navigation.TopAppBarMain
 
 
 class MainActivity : ComponentActivity() {
@@ -35,6 +36,9 @@ fun MainScreen() {
     var selectedScreen by remember { mutableStateOf<AppScreens>(AppScreens.OneScreen) }
 
     Scaffold(
+        topBar = {
+            TopAppBarMain()
+        },
         bottomBar = {
             BottomNavigationBar(selectedScreen) { screen ->
                 selectedScreen = screen
