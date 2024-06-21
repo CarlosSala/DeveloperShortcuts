@@ -8,18 +8,19 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
@@ -28,14 +29,13 @@ import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -60,8 +60,6 @@ import com.example.developershortcut.navigation.BottomNavigationBar
 import com.example.developershortcut.navigation.SplashNavigation
 import com.example.developershortcut.navigation.TopAppBarMain
 import kotlinx.coroutines.launch
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
 
 class MainActivity : ComponentActivity() {
@@ -74,7 +72,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
     val context = LocalContext.current
@@ -130,11 +127,10 @@ fun MainScreen() {
                             textAlign = TextAlign.Center
                         )
                     }
-                    Divider(
+                    HorizontalDivider(
                         Modifier.align(Alignment.BottomCenter), thickness = 1.dp,
-                        Color.DarkGray
+                        color = Color.Gray
                     )
-
                 }
                 drawerItem.forEach {
                     NavigationDrawerItem(label = { Text(text = it.text) },
@@ -164,9 +160,9 @@ fun MainScreen() {
                         }
                     )
                 }
-                Divider(
-                    thickness = 1.dp,
-                    color = Color.DarkGray
+                HorizontalDivider(
+                    Modifier.align(Alignment.CenterHorizontally), thickness = 1.dp,
+                    color = Color.Gray
                 )
                 drawerItem2.forEach {
                     NavigationDrawerItem(label = { Text(text = it.text) },
@@ -189,22 +185,13 @@ fun MainScreen() {
         }
     }, drawerState = drawerState) {
 
-
         Scaffold(
             topBar = {
-                // TopAppBarMain()
-                TopAppBar(title = { Text(text = "drawer menu") },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            scope.launch {
-                                drawerState.open()
-                            }
-                        }) {
-                            Icon(imageVector = Icons.Filled.Menu, contentDescription = "menu Icon")
-                        }
-
+                TopAppBarMain(drawerState) {
+                    scope.launch {
+                        it.open()
                     }
-                )
+                }
             },
             bottomBar = {
                 BottomNavigationBar(selectedScreen) { screen ->
