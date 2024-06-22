@@ -1,8 +1,4 @@
-package com.example.developershortcut.screen.threescreen
-
-import android.content.Context
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+package com.example.developershortcut.screen.fourscreen
 
 /*
 class SystemInfoViewModelFactory(

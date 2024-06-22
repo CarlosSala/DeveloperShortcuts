@@ -74,6 +74,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
+
     val context = LocalContext.current
     val navController = rememberNavController()
     var selectedScreen by remember { mutableStateOf<AppScreens>(AppScreens.OneScreen) }
@@ -209,7 +210,6 @@ fun MainScreen() {
             AppNavigation(navController, context, paddingValues)
         }
     }
-
 }
 
 @Preview(showBackground = true)

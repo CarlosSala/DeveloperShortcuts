@@ -21,11 +21,7 @@ fun BottomNavigationBar(
     NavigationBar {
         NavigationBarItem(
             icon = {
-                //Icon(Icons.Filled.Home, contentDescription = null)
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_android_24),
-                    contentDescription = null
-                )
+                Icon(Icons.Filled.Home, contentDescription = null)
             },
             label = { Text("Shortcuts") },
             selected = selectedScreen == AppScreens.OneScreen,
@@ -34,13 +30,26 @@ fun BottomNavigationBar(
         )
         NavigationBarItem(
             icon = {
-                Icon(Icons.Filled.Home, contentDescription = null)
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_android_24),
+                    contentDescription = null
+                )
             },
             label = { Text("Actions") },
             selected = selectedScreen == AppScreens.TwoScreen,
             onClick = { onItemSelected(AppScreens.TwoScreen) }
         )
-
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_notes_24),
+                    contentDescription = null
+                )
+            },
+            label = { Text("Notes") },
+            selected = selectedScreen == AppScreens.ThreeScreen,
+            onClick = { onItemSelected(AppScreens.ThreeScreen) }
+        )
         NavigationBarItem(
             icon = {
                 Icon(
@@ -49,8 +58,8 @@ fun BottomNavigationBar(
                 )
             },
             label = { Text("Others") },
-            selected = selectedScreen == AppScreens.ThreeScreen,
-            onClick = { onItemSelected(AppScreens.ThreeScreen) }
+            selected = selectedScreen == AppScreens.FourScreen,
+            onClick = { onItemSelected(AppScreens.FourScreen) }
         )
     }
 }
