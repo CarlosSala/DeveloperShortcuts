@@ -30,7 +30,7 @@ fun AppNavigation(
             IntentActionsScreen(context, paddingValues)
         }
         composable(AppScreens.ThreeScreen.route) {
-            NoteScreen()
+            NoteScreen(paddingValues)
         }
         composable(AppScreens.FourScreen.route) {
 /*            *//*val viewModel: SystemInfoViewModel = viewModel(
