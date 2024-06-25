@@ -1,6 +1,6 @@
 package com.example.developershortcut.screen.threescreen
 
-import android.app.AlertDialog
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,9 +16,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -34,12 +33,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
-import kotlinx.coroutines.launch
+import com.example.developershortcut.data.database.entities.NoteEntity
+import com.example.developershortcut.screen.fourscreen.SystemInfoViewModel
 
 @Composable
 fun NoteScreen(paddingValues: PaddingValues) {
@@ -65,14 +67,14 @@ fun NoteScreen(paddingValues: PaddingValues) {
                 .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            TextEntryInput(viewModel)
+            // TextEntryInput(viewModel)
             Spacer(modifier = Modifier.height(16.dp))
             TextEntriesList(viewModel)
 
             if (showDialog) {
                 NoteDialog(onDismiss = { showDialog = false }, onSave = { title, body ->
                     // Save note here
-                    viewModel.addNote(title)
+                    viewModel.addNote(noteEntity = NoteEntity(title, body))
                     // title = ""
                     showDialog = false
                 })
@@ -150,7 +152,7 @@ fun TextEntryInput(viewModel: NoteViewModel) {
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(
             onDone = {
-                viewModel.addNote(text)
+                //  viewModel.addNote(text)
                 text = ""
             }
         ),
@@ -164,12 +166,51 @@ fun TextEntriesList(viewModel: NoteViewModel) {
 
     val textEntries by viewModel.allNoteEntity.collectAsState(initial = emptyList())
 
-    LazyColumn {
-        items(textEntries) { entry ->
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(1.dp),
+    ) {
+        items(textEntries) { item ->
+
+            ShowItems(item)
+        }
+    }
+}
+
+@Composable
+fun ShowItems(
+    note: NoteEntity
+) {
+    Card(
+        modifier = Modifier
+            .padding(1.dp)
+            .fillMaxWidth(0.95f)
+    ) {
+        Column(
+            modifier = Modifier.padding(vertical = 24.dp, horizontal = 32.dp)
+        ) {
             Text(
-                text = entry.title,
-                modifier = Modifier.padding(8.dp)
+                text = note.title,
+                modifier = Modifier.padding(1.dp),
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = note.description,
+                modifier = Modifier.padding(1.dp)
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun MyPreview() {
+    ShowItems(
+        note = NoteEntity(
+            "title",
+            "description"
+        )
+    )
 }

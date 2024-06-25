@@ -22,9 +22,9 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun addNote(note: String) {
+    fun addNote(noteEntity: NoteEntity) {
         viewModelScope.launch {
-            repository.insert(note)
+            repository.insert(noteEntity)
         }
     }
 

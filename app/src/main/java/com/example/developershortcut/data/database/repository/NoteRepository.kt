@@ -8,7 +8,7 @@ class NoteRepository(private val noteDao: NoteDao) {
 
     val allNoteEntity: Flow<List<NoteEntity>> = noteDao.getAllNotes()
 
-    suspend fun insert(text: String) {
-        noteDao.insertNoteEntity(NoteEntity(text, "custom_body"))
+    suspend fun insert(noteEntity: NoteEntity) {
+        noteDao.insertNoteEntity(noteEntity)
     }
 }
