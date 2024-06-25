@@ -28,6 +28,13 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun deleteNote(note: NoteEntity) {
+        viewModelScope.launch {
+            repository.deleteNote(note)
+            // loadNotes()
+        }
+    }
+
     /*    private fun loadNotes() {
             viewModelScope.launch {
                 _tasks.value = noteDao.getAllNotes()
@@ -42,10 +49,6 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
 
-        fun deleteNote(note: NoteEntity) {
-            viewModelScope.launch {
-                noteDao.deleteNote(note)
-                loadNotes()
-            }
+
         }*/
 }

@@ -25,9 +25,9 @@ interface NoteDao {
     fun insertNote(note: NoteEntity)
 
     @Update
-    fun updateNote(task: NoteEntity)
+    fun updateNote(note: NoteEntity)
 
     @Delete
-    fun deleteNote(task: NoteEntity)
+    suspend fun deleteNote(note: NoteEntity)
 
 }
