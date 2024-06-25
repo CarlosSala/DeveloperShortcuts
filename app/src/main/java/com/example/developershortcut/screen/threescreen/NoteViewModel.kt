@@ -22,16 +22,21 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun addNote(noteEntity: NoteEntity) {
+    fun addNote(note: NoteEntity) {
         viewModelScope.launch {
-            repository.insert(noteEntity)
+            repository.insert(note)
+        }
+    }
+
+    fun updateNote(note: NoteEntity) {
+        viewModelScope.launch {
+            repository.updateNote(note)
         }
     }
 
     fun deleteNote(note: NoteEntity) {
         viewModelScope.launch {
             repository.deleteNote(note)
-            // loadNotes()
         }
     }
 
@@ -40,15 +45,5 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
                 _tasks.value = noteDao.getAllNotes()
             }
         }
-
-
-        fun updateNote(note: NoteEntity) {
-            viewModelScope.launch {
-                noteDao.updateNote(note)
-                loadNotes()
-            }
-        }
-
-
         }*/
 }
