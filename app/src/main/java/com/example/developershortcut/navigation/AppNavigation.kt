@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.developershortcut.screen.onescreen.ShortcutsScreen
 import com.example.developershortcut.screen.fourscreen.SystemInfoScreen
-import com.example.developershortcut.screen.threescreen.NotesScreen
+import com.example.developershortcut.screen.threescreen.NoteScreen
 import com.example.developershortcut.screen.twoscreen.IntentActionsScreen
 
 
@@ -30,7 +30,7 @@ fun AppNavigation(
             IntentActionsScreen(context, paddingValues)
         }
         composable(AppScreens.ThreeScreen.route) {
-            NotesScreen()
+            NoteScreen()
         }
         composable(AppScreens.FourScreen.route) {
 /*            *//*val viewModel: SystemInfoViewModel = viewModel(
