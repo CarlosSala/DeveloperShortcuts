@@ -64,6 +64,7 @@ fun NoteScreen(paddingValues: PaddingValues) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Spacer(modifier = Modifier.height(16.dp))
+
             TextEntriesList(viewModel)
 
             if (showCreateDialog) {
@@ -71,7 +72,7 @@ fun NoteScreen(paddingValues: PaddingValues) {
                     onDismiss = { showCreateDialog = false },
                     onSave = { title, body ->
                         // Save note here
-                        viewModel.addNote(note = NoteEntity(title, body))
+                        viewModel.addNote(NoteEntity(title, body))
                         showCreateDialog = false
                     }
                 )
@@ -112,7 +113,7 @@ fun CreateNoteDialog(onDismiss: () -> Unit, onSave: (String, String) -> Unit) {
                 TextField(
                     value = body,
                     onValueChange = { body = it },
-                    label = { Text("Note") },
+                    label = { Text("Message") },
                     modifier = Modifier
                         .fillMaxHeight(0.7f)
                         .fillMaxWidth(),
@@ -201,30 +202,28 @@ fun ShowItems(
     }
 
     if (showDialogUpdate) {
-        noteToUpdate.let { noteToUpdate ->
-            if (noteToUpdate != null) {
-                NoteUpdateDialog(noteToUpdate,
-                    onDismiss = { showDialogUpdate = false },
-                    onUpdate = { title, description ->
-                        // update note here
-                        noteToUpdate.title = title
-                        noteToUpdate.description = description
+        noteToUpdate?.let { currentNote ->
+            NoteUpdateDialog(currentNote,
+                onDismiss = { showDialogUpdate = false },
+                onUpdate = { title, description ->
+                    // update note here
+                    currentNote.title = title
+                    currentNote.description = description
 
-                        viewModel.updateNote(noteToUpdate)
-                        showDialogUpdate = false
-                    }
-                )
-            }
+                    viewModel.updateNote(currentNote)
+                    showDialogUpdate = false
+                }
+            )
         }
     }
 
     if (showDialogDelete) {
-        noteToDelete?.let { note ->
+        noteToDelete?.let { currentNote ->
             ConfirmDeleteDialog(
-                note = note,
+                note = currentNote,
                 onConfirm = {
-                    // Handle the note deletion here
-                    viewModel.deleteNote(note)
+                    // Handle the currentNote deletion here
+                    viewModel.deleteNote(currentNote)
                     showDialogDelete = false
                 },
                 onDismiss = { showDialogDelete = false }
@@ -307,7 +306,7 @@ fun ConfirmDeleteDialog(
             Text(text = "Confirm Deletion")
         },
         text = {
-            Text("Are you sure you want to delete the note \"$note\"?")
+            Text("Are you sure you want to delete the note ${note.title} ?")
         },
         confirmButton = {
             Button(onClick = onConfirm) {
