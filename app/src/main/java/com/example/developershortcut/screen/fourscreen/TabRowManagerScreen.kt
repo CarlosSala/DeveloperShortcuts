@@ -11,8 +11,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.developershortcut.screen.fourscreen.news.NewsScreen
-import com.example.developershortcut.screen.fourscreen.quotes.QuotesScreen
 import com.example.developershortcut.screen.fourscreen.systeminfo.SystemInfoScreen
+import com.example.developershortcut.screen.fourscreen.quotes.main.QuotesScreen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
