@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.developershortcut.screen.fourscreen.TabRowManagerScreen
 import com.example.developershortcut.screen.onescreen.ShortcutsScreen
-import com.example.developershortcut.screen.fourscreen.SystemInfoScreen
 import com.example.developershortcut.screen.threescreen.NoteScreen
 import com.example.developershortcut.screen.twoscreen.IntentActionsScreen
 
@@ -33,11 +33,13 @@ fun AppNavigation(
             NoteScreen(paddingValues)
         }
         composable(AppScreens.FourScreen.route) {
-/*            *//*val viewModel: SystemInfoViewModel = viewModel(
+            TabRowManagerScreen(paddingValues)
+        }
+   /*     composable(AppScreens.FourScreen.route) {
+            val viewModel: SystemInfoViewModel = viewModel(
                 factory = SystemInfoViewModelFactory(LocalContext.current)
             )
-*/
             SystemInfoScreen(paddingValues)
-        }
+        }*/
     }
 }
