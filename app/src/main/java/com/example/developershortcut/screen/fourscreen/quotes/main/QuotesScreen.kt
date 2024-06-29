@@ -19,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.developershortcut.screen.fourscreen.quotes.domain.model.Movie
+import com.example.developershortcut.screen.fourscreen.quotes.domain.model.DomainQuote
 
 @Composable
 fun QuotesScreen() {
@@ -28,11 +28,11 @@ fun QuotesScreen() {
 
     // Solicita las películas populares al iniciar la composición
     LaunchedEffect(Unit) {
-        viewModel.requestPopularMovies("US") // Ajusta la región según sea necesario
+        viewModel.requestPopularQuotes() // Ajusta la región según sea necesario
     }
 
     val progressVisible by viewModel.progressVisible.collectAsState()
-    val popularMovies by viewModel.listPopularMovies.collectAsState()
+    val popularQuotes by viewModel.listPopularMovies.collectAsState()
     val showMessage by viewModel.showMessage.collectAsState(initial = "")
 
     Column(
@@ -44,9 +44,9 @@ fun QuotesScreen() {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
         } else {
             LazyColumn {
-                items(popularMovies) { movie ->
-                    MovieItem(movie) { selectedMovie ->
-                        viewModel.onMovieClicked(selectedMovie)
+                items(popularQuotes) { quote ->
+                    QuoteItem(quote) { selectedQuote ->
+                        viewModel.onQuoteClicked(selectedQuote)
                     }
                 }
             }
@@ -63,23 +63,23 @@ fun QuotesScreen() {
 }
 
 @Composable
-fun MovieItem(movie: Movie, onClick: (Movie) -> Unit) {
+fun QuoteItem(domainQuote: DomainQuote, onClick: (DomainQuote) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
             .clickable {
-                onClick(movie)
+                onClick(domainQuote)
             },
         elevation = CardDefaults.cardElevation(8.dp),
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = movie.title,
+                text = domainQuote.author,
                 // style = MaterialTheme.typography.h6
             )
             Text(
-                text = movie.overview,
+                text = domainQuote.category,
                 // style = MaterialTheme.typography.body2
             )
         }

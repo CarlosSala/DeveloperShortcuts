@@ -1,18 +1,15 @@
 package com.example.developershortcut.screen.fourscreen.quotes.common
 
-import com.example.developershortcut.screen.fourscreen.quotes.data.repository.network.MovieDbClient
+import com.example.developershortcut.screen.fourscreen.quotes.data.repository.network.QuotesDbClient
 import com.example.developershortcut.screen.fourscreen.quotes.data.repository.network.RemoteDataSource
-import com.example.developershortcut.screen.fourscreen.quotes.domain.model.Movie
+import com.example.developershortcut.screen.fourscreen.quotes.domain.model.DomainQuote
 
 class ServerMovieDataSource : RemoteDataSource {
 
     // this result it will be used by other who will be using this
-    override suspend fun getPopularMovies(region: String): List<Movie> {
+    override suspend fun getPopularQuotes(): List<DomainQuote> {
 
-        val popularMovies = MovieDbClient.service.getPopularMovies(
-            "791a8c4d026076d931801fd25a0f9343",
-            region
-        )
-        return popularMovies.results
+        val listQuotes = QuotesDbClient.service.getPopularQuotes()
+        return listQuotes
     }
 }
