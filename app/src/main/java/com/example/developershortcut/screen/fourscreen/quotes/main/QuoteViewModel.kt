@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.lang.Thread.State
 
 class QuoteViewModel() : ViewModel() {
 
@@ -26,13 +27,17 @@ class QuoteViewModel() : ViewModel() {
     private val _listPopularQuotes = MutableStateFlow<List<DomainQuote>>(emptyList())
     val listPopularMovies: StateFlow<List<DomainQuote>> get() = _listPopularQuotes
 
-    private val _showMessage = MutableSharedFlow<String>()
-    val showMessage: SharedFlow<String> get() = _showMessage
+    private val _showMessage = MutableStateFlow<String>("")
+    val showMessage: StateFlow<String> get() = _showMessage
+    /*
+        private val _showMessage = MutableSharedFlow<String>()
+        val showMessage: SharedFlow<String> get() = _showMessage
+    */
 
 
     fun requestPopularQuotes() {
 
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             _progressVisible.value = true
             _listPopularQuotes.value = loadPopularQuotesUseCase.loadPopularQuotes()
             _progressVisible.value = false
@@ -42,7 +47,7 @@ class QuoteViewModel() : ViewModel() {
     fun onQuoteClicked(domainQuote: DomainQuote) {
 
         viewModelScope.launch {
-            _showMessage.emit(domainQuote.author)
+            _showMessage.emit(domainQuote.language)
         }
     }
 }

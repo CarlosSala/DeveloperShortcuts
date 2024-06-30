@@ -13,6 +13,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.developershortcut.screen.fourscreen.news.NewsScreen
 import com.example.developershortcut.screen.fourscreen.systeminfo.SystemInfoScreen
 import com.example.developershortcut.screen.fourscreen.quotes.main.QuotesScreen
+import com.example.developershortcut.screen.fourscreen.quotes.main.navigation.QuoteNavigation
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -57,7 +58,7 @@ fun TabRowManagerScreen(paddingValues: PaddingValues) {
         ) { page ->
             when (page) {
                 0 -> NewsScreen()
-                1 -> QuotesScreen()
+                1 -> QuoteNavigation()
                 2 -> SystemInfoScreen()
             }
         }
