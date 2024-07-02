@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 fun TabRowManagerScreen(paddingValues: PaddingValues) {
 
     val viewModel: TabRowViewModel = viewModel()
-    val screenTitles = listOf("News", "Quotes", "About System")
+    val screenTitles = listOf("Weather", "Quotes", "About System")
     val pagerState = rememberPagerState(initialPage = viewModel.currentPage, pageCount = { 3 })
     val coroutineScope = rememberCoroutineScope()
 
