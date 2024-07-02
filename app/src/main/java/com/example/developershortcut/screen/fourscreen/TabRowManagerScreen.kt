@@ -10,9 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.developershortcut.screen.fourscreen.news.NewsScreen
+import com.example.developershortcut.screen.fourscreen.weather.main.WeatherScreen
 import com.example.developershortcut.screen.fourscreen.systeminfo.SystemInfoScreen
-import com.example.developershortcut.screen.fourscreen.quotes.main.QuotesScreen
 import com.example.developershortcut.screen.fourscreen.quotes.main.navigation.QuoteNavigation
 import kotlinx.coroutines.launch
 
@@ -57,7 +56,7 @@ fun TabRowManagerScreen(paddingValues: PaddingValues) {
             modifier = Modifier.weight(1f)
         ) { page ->
             when (page) {
-                0 -> NewsScreen()
+                0 -> WeatherScreen()
                 1 -> QuoteNavigation()
                 2 -> SystemInfoScreen()
             }

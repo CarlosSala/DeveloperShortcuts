@@ -1,6 +1,6 @@
 package com.example.developershortcut.screen.fourscreen.quotes.main
 
-import com.example.developershortcut.screen.fourscreen.quotes.common.ServerMovieDataSource
+import com.example.developershortcut.screen.fourscreen.quotes.common.ServerQuotesDataSource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.developershortcut.screen.fourscreen.quotes.data.repository.QuoteRepository
@@ -8,17 +8,14 @@ import com.example.developershortcut.screen.fourscreen.quotes.domain.model.Domai
 import com.example.developershortcut.screen.fourscreen.quotes.domain.usecases.LoadPopularQuotesUseCase
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.lang.Thread.State
 
 class QuoteViewModel() : ViewModel() {
 
     private val loadPopularQuotesUseCase = LoadPopularQuotesUseCase(
-        QuoteRepository(ServerMovieDataSource())
+        QuoteRepository(ServerQuotesDataSource())
     )
 
     private val _progressVisible = MutableStateFlow(false)
