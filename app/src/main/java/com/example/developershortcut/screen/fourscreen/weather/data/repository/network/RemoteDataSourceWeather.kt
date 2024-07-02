@@ -4,5 +4,5 @@ import com.example.developershortcut.screen.fourscreen.weather.domain.model.Weat
 
 interface RemoteDataSourceWeather {
 
-    suspend fun getWeather(): WeatherModel
+    suspend fun getWeather(region: String): WeatherModel
 }

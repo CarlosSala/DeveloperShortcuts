@@ -1,5 +1,7 @@
 package com.example.developershortcut.screen.fourscreen.weather.main
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,8 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -23,8 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -35,19 +38,29 @@ import com.example.developershortcut.screen.fourscreen.weather.domain.model.Weat
 @Composable
 fun WeatherScreen() {
 
+    val defaultRegion = "santiago" // Santiago
     val viewModel: WeatherViewModel = viewModel()
-
-    LaunchedEffect(Unit) {
-        viewModel.getWeather()
-    }
+    val context = LocalContext.current
 
     val progressVisible by viewModel.progressVisible.collectAsState()
     val weather by viewModel.getWeather.collectAsState()
+    val converterValuesWeather by viewModel.getConverterValuesWeather.collectAsState()
+    val error by viewModel.error.collectAsState()
+
+    LaunchedEffect(Unit) {
+        error?.let {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.getWeather(defaultRegion)
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+        //.padding(16.dp)
     ) {
 
         if (progressVisible) {
@@ -60,15 +73,24 @@ fun WeatherScreen() {
         } else {
 
             weather?.let {
-                WeatherUI(it)
+                WeatherUI(it, converterValuesWeather, viewModel)
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WeatherUI(weather: WeatherModel) {
-    var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
+fun WeatherUI(
+    weather: WeatherModel,
+    converterValuesWeather: List<String>?,
+    viewModel: WeatherViewModel
+) {
+
+    val context: Context = LocalContext.current
+
+    var searchQuery by remember { mutableStateOf("Santiago") }
+    var searchActive by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -92,19 +114,34 @@ fun WeatherUI(weather: WeatherModel) {
             modifier = Modifier.padding(bottom = 16.dp)
         )
         Text(
-            text = "Last Update: ${weather.dt}",
+            text = "Last Update: ${converterValuesWeather?.get(0)}",
             fontSize = 16.sp,
             color = Color.White,
             modifier = Modifier.padding(bottom = 16.dp)
         )
-        TextField(
-            value = searchQuery,
-            onValueChange = { newValue -> searchQuery = newValue },
-            placeholder = { Text(text = "Search Cities") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp)
-        )
+
+        SearchBar(
+            query = searchQuery,
+            onQueryChange = { searchQuery = it },
+            onSearch = {
+                Toast.makeText(context, searchQuery, Toast.LENGTH_LONG).show()
+                viewModel.getWeather(searchQuery)
+                searchActive = false
+            },
+            active = searchActive,
+            onActiveChange = { searchActive = it },
+            placeholder = { Text("Search a city") }
+        ) {
+
+        }
+        /*   TextField(
+               value = searchQuery,
+               onValueChange = { newValue -> searchQuery = newValue },
+               placeholder = { Text(text = "Search Cities") },
+               modifier = Modifier
+                   .fillMaxWidth()
+                   .padding(bottom = 16.dp)
+           )*/
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -125,7 +162,11 @@ fun WeatherUI(weather: WeatherModel) {
                 .padding(bottom = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Feels like: ${weather.main.feels_like}°C", fontSize = 18.sp, color = Color.White)
+            Text(
+                text = "Feels like: ${weather.main.feels_like}°C",
+                fontSize = 18.sp,
+                color = Color.White
+            )
         }
         Row(
             modifier = Modifier
@@ -144,8 +185,14 @@ fun WeatherUI(weather: WeatherModel) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-                DetailIconWithText(iconResId = R.drawable.wind, detail = "Wind speed: ${weather.wind.speed} KM/H")
-                DetailIconWithText(iconResId = R.drawable.humidity, detail = "Humidity: ${weather.main.humidity} %")
+                DetailIconWithText(
+                    iconResId = R.drawable.wind,
+                    detail = "Wind speed: ${weather.wind.speed} KM/H"
+                )
+                DetailIconWithText(
+                    iconResId = R.drawable.humidity,
+                    detail = "Humidity: ${weather.main.humidity} %"
+                )
                 DetailIconWithText(iconResId = R.drawable.smoke, detail = "Air Quality: Good")
             }
             Row(
@@ -153,8 +200,14 @@ fun WeatherUI(weather: WeatherModel) {
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 DetailIconWithText(iconResId = R.drawable.pressure, detail = "Pressure: 1013 hPa")
-                DetailIconWithText(iconResId = R.drawable.sunset, detail = "Sunset: 10 km")
-                DetailIconWithText(iconResId = R.drawable.sunrise, detail = "sunrise: 5")
+                DetailIconWithText(
+                    iconResId = R.drawable.sunset,
+                    detail = "Sunset: ${converterValuesWeather?.get(1)}"
+                )
+                DetailIconWithText(
+                    iconResId = R.drawable.sunrise,
+                    detail = "sunrise: ${converterValuesWeather?.get(2)}"
+                )
             }
         }
     }

@@ -5,8 +5,8 @@ import com.example.developershortcut.screen.fourscreen.weather.domain.model.Weat
 
 class WeatherRepository(private val remoteWeatherDataSource: RemoteDataSourceWeather) {
 
-    suspend fun getWeather(): WeatherModel {
+    suspend fun getWeather(region: String): WeatherModel {
 
-        return remoteWeatherDataSource.getWeather()
+        return remoteWeatherDataSource.getWeather(region)
     }
 }

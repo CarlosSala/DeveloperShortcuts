@@ -6,10 +6,11 @@ import com.example.developershortcut.screen.fourscreen.weather.domain.model.Weat
 
 class ServerWeatherDataSource : RemoteDataSourceWeather {
 
-    override suspend fun getWeather(): WeatherModel {
+    override suspend fun getWeather(region: String): WeatherModel {
         val weather = WeatherDbClient.service.getWeather(
-            "3871336",
-            "dabb2d5bc8c2a104fb325acef1607cfe"
+            city = region,
+            apiKey = "dabb2d5bc8c2a104fb325acef1607cfe",
+            units = "metric"
         )
         return weather
     }
