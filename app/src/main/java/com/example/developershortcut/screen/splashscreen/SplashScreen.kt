@@ -41,7 +41,7 @@ fun Splash() {
     ) {
 
         Image(
-            painter = painterResource(id = R.drawable.ic_developer_mode_24),
+            painter = painterResource(id = R.drawable.smoke),
             contentDescription = null
         )
         Text(
