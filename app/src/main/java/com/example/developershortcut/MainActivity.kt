@@ -8,11 +8,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -74,114 +77,119 @@ fun MainScreen() {
     val context = LocalContext.current
     val navController = rememberNavController()
     var selectedScreen by remember { mutableStateOf<AppScreens>(AppScreens.OneScreen) }
-
-    val drawerItem = listOf(
-        DrawerItems(Icons.Default.Face, "Profile", 0, false),
-        DrawerItems(Icons.Filled.Email, "Inbox", 32, true),
-        DrawerItems(Icons.Filled.Favorite, "Favorite", 32, true),
-        DrawerItems(Icons.Filled.Settings, "Setting", 0, false)
-    )
-
-    val drawerItem2 = listOf(
-        DrawerItems(Icons.Default.Share, "Share", 0, false),
-        DrawerItems(Icons.Filled.Star, "Rate", 0, false)
-    )
-
     var selectedItem by remember { mutableStateOf(drawerItem[0]) }
-
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    ModalNavigationDrawer(drawerContent = {
-
-        ModalDrawerSheet {
-            Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .background(Color(0xffffc107)),
-                    contentAlignment = Alignment.Center
+    ModalNavigationDrawer(
+        drawerContent = {
+            ModalDrawerSheet {
+                Column(
+                    Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Column(
-                        Modifier.wrapContentSize(),
-                        verticalArrangement = Arrangement.SpaceAround,
-                        horizontalAlignment = Alignment.CenterHorizontally
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
+                            .background(Color(0xFF898A8D)),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                            contentDescription = "profile pic",
-                            modifier = Modifier
-                                .size(130.dp)
-                                .clip(CircleShape)
+                        Column(
+                            Modifier.wrapContentSize(),
+                            verticalArrangement = Arrangement.SpaceAround,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                                contentDescription = "My Profile",
+                                modifier = Modifier
+                                    .size(130.dp)
+                                    .clip(CircleShape)
+                            )
+                            Text(
+                                text = "Information",
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 16.dp),
+                                fontSize = 22.sp,
+                                textAlign = TextAlign.Center,
+                                color = Color.White
+                            )
+                        }
+                        HorizontalDivider(
+                            Modifier.align(Alignment.BottomCenter), thickness = 1.dp,
+                            color = Color.Gray
                         )
-                        Text(
-                            text = "Mr Shrek",
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(top = 16.dp),
-                            fontSize = 22.sp,
-                            textAlign = TextAlign.Center
+                    } // end profile
+                    drawerItem.forEach { item ->
+                        NavigationDrawerItem(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            label = {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Text(text = item.text)
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    if (item.hasBadge) {
+                                        BadgedBox(
+                                            badge = {
+                                                Badge {
+                                                    Text(
+                                                        text = item.badgeCount.toString(),
+                                                        fontSize = 17.sp
+                                                    )
+                                                }
+                                            }
+                                        ) {
+                                            Icon(
+                                                imageVector = item.icon,
+                                                contentDescription = item.text
+                                            )
+                                        }
+                                    } else {
+                                        Icon(
+                                            imageVector = item.icon,
+                                            contentDescription = item.text
+                                        )
+                                    }
+                                }
+                            },
+                            selected = item == selectedItem,
+                            onClick = {
+                                selectedItem = item
+                                scope.launch {
+                                    drawerState.close()
+                                }
+                            }
                         )
                     }
                     HorizontalDivider(
-                        Modifier.align(Alignment.BottomCenter), thickness = 1.dp,
+                        Modifier.align(Alignment.CenterHorizontally), thickness = 1.dp,
                         color = Color.Gray
-                    )
-                }
-                drawerItem.forEach {
-                    NavigationDrawerItem(label = { Text(text = it.text) },
-                        selected = it == selectedItem,
-                        onClick = {
-                            selectedItem = it
-
-                            scope.launch {
-                                drawerState.close()
-                            }
-
-                        },
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        icon = {
-                            Icon(imageVector = it.icon, contentDescription = it.text)
-                        },
-                        badge = {
-                            if (it.hasBadge) {
-                                BadgedBox(badge = {
-                                    Badge {
-                                        Text(text = it.badgeCount.toString(), fontSize = 17.sp)
-                                    }
-                                }) {
-
+                    ) // End firsts items
+                    drawerItem2.forEach {
+                        NavigationDrawerItem(
+                            label = { Text(text = it.text) },
+                            selected = it == selectedItem,
+                            onClick = {
+                                selectedItem = it
+                                scope.launch {
+                                    drawerState.close()
                                 }
+                            },
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            icon = {
+                                Icon(
+                                    imageVector = it.icon,
+                                    contentDescription = it.text
+                                )
                             }
-                        }
-                    )
-                }
-                HorizontalDivider(
-                    Modifier.align(Alignment.CenterHorizontally), thickness = 1.dp,
-                    color = Color.Gray
-                )
-                drawerItem2.forEach {
-                    NavigationDrawerItem(label = { Text(text = it.text) },
-                        selected = it == selectedItem,
-                        onClick = {
-                            selectedItem = it
-
-                            scope.launch {
-                                drawerState.close()
-                            }
-
-                        },
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        icon = {
-                            Icon(imageVector = it.icon, contentDescription = it.text)
-                        }
-                    )
+                        )
+                    }
                 }
             }
-        }
-    }, drawerState = drawerState) {
-
+        },
+        drawerState = drawerState
+    ) {
         Scaffold(
             topBar = {
                 TopAppBarMain(drawerState) {
@@ -220,4 +228,16 @@ data class DrawerItems(
     val text: String,
     val badgeCount: Int,
     val hasBadge: Boolean
+)
+
+val drawerItem = listOf(
+    DrawerItems(Icons.Default.Face, "Profile", 0, false),
+    DrawerItems(Icons.Filled.Email, "Inbox", 32, true),
+    DrawerItems(Icons.Filled.Favorite, "Favorite", 32, true),
+    DrawerItems(Icons.Filled.Settings, "Setting", 0, false)
+)
+
+val drawerItem2 = listOf(
+    DrawerItems(Icons.Default.Share, "Share", 0, false),
+    DrawerItems(Icons.Filled.Star, "Rate", 0, false)
 )
