@@ -1,44 +1,57 @@
 # Developer Shortcuts App
 
-Este proyecto en desarrollo es una aplicación pensada para desarrolladores, que incluye varias pantallas con características específicas para gestionar atajos, acciones de intent, notas, clima, citas y mostrar información del sistema.
+Este proyecto en progreso es una aplicación diseñada para desarrolladores, con varias pantallas que permiten gestionar atajos, acciones de intent, notas, clima, citas y mostrar información del sistema del dispositivo.
 
-La aplicación de momento incluye las siguientes pantallas y funcionalidades:
+## Tabla de Contenidos
 
-1. **Pantalla de Atajos del Teléfono:**
-    - **Descripción:** Permite acceder a atajos para funciones importantes del teléfono, facilitando un acceso rápido a las aplicaciones o configuraciones más usadas.
+- [Developer Shortcuts App](#developer-shortcuts-app)
+   - [Tabla de Contenidos](#tabla-de-contenidos)
+   - [Características](#características)
+      - [Pantalla de Atajos del Teléfono](#pantalla-de-atajos-del-teléfono)
+      - [Pantalla de Acciones de Intent](#pantalla-de-acciones-de-intent)
+      - [Pantalla de Notas](#pantalla-de-notas)
+      - [Pantalla del Clima](#pantalla-del-clima)
+      - [Pantalla de Citas](#pantalla-de-citas)
+      - [Pantalla de Información del Sistema](#pantalla-de-información-del-sistema)
+   - [Tecnologías Utilizadas](#tecnologías-utilizadas)
+   - [Instalación y Ejecución](#instalación-y-ejecución)
+   - [Capturas de Pantalla](#capturas-de-pantalla)
 
-2. **Pantalla de Acciones de Intent:**
-    - **Descripción:** Muestra una lista de acciones de intent que los usuarios pueden realizar, como enviar correos electrónicos o abrir aplicaciones específicas.
+## Características
 
-3. **Pantalla de Notas:**
-    - **Descripción:** Permite a los usuarios crear, guardar y gestionar notas usando Room. Incluye características para agregar, editar y eliminar notas.
+### Pantalla de Atajos del Teléfono
+- Permite acceder rápidamente a funciones importantes del teléfono, facilitando un acceso eficiente a aplicaciones o configuraciones frecuentemente utilizadas.
 
-4. **Pantalla del Clima:**
-    - **Descripción:** Proporciona información meteorológica actual para diferentes ciudades. Incluye una funcionalidad de búsqueda por nombre de ciudad y muestra los datos del clima utilizando Retrofit para consultas en tiempo real.
+### Pantalla de Acciones de Intent
+- Proporciona una lista de acciones de intent que los usuarios pueden ejecutar, como enviar correos electrónicos o abrir aplicaciones específicas.
 
-5. **Pantalla de Citas:**
-    - **Descripción:** Muestra citas inspiradoras para desarrolladores. La pantalla permite navegar a detalles adicionales y utiliza una API propia para obtener las citas.
+### Pantalla de Notas
+- Permite crear, guardar y gestionar notas utilizando Room. Incluye funciones para agregar, editar y eliminar notas, con soporte para múltiples entradas.
 
-6. **Pantalla de Información del Sistema:**
-    - **Descripción:** Muestra información relevante del sistema del dispositivo, incluyendo detalles del hardware y software, con un diseño actualizado para una visualización clara y eficiente.
+### Pantalla del Clima
+- Muestra información meteorológica actualizada para varias ciudades, con búsqueda por nombre de ciudad. Utiliza Retrofit para obtener datos del clima en tiempo real.
+
+### Pantalla de Citas
+- Ofrece citas inspiradoras para desarrolladores, obtenidas a través de una API personalizada, con navegación a detalles adicionales.
+
+### Pantalla de Información del Sistema
+- Proporciona información detallada sobre el hardware y software del dispositivo, presentada de forma clara y organizada.
 
 ## Tecnologías Utilizadas
 
-El proyecto utiliza una combinación de tecnologías modernas y componentes de Android. A continuación se detallan las principales tecnologías:
-
+El proyecto hace uso de las siguientes tecnologías y componentes de Android:
 
 - **Jetpack Compose**
 - **Navigation Drawer**
 - **Bottom Navigation**
 - **Jetpack Navigation**
-- **Material Design**
+- **Material Design 3**
 - **ViewModel**
 - **Flows**
 - **Coroutines**
 - **Retrofit**
 - **Room**
 - **Clean Architecture**
-
 
 ## Instalación y Ejecución
 
@@ -47,9 +60,23 @@ El proyecto utiliza una combinación de tecnologías modernas y componentes de A
    git clone <URL_DEL_REPOSITORIO>
    ```
 
+2. **Ejecutar el proyecto en Android Studio:**
+   - Abre el proyecto en Android Studio.
+   - Conéctalo a un emulador o dispositivo físico.
+   - Compila y ejecuta la aplicación.
 
-## Licencia
+## Capturas de Pantalla
 
-Este proyecto está bajo la Licencia Apache, Versión 2.0.
+<h3 align="center">Aquí algunas capturas de pantalla de la aplicación:</h3>
 
----
+<table>
+<td width="50%">
+<div align="center">
+<img src="./screenshots/shortcuts_screen.png" width="200" alt="shortcus_screen">
+<img src="./screenshots/actions_screen.png" width="200" alt="actions_screen">
+<br>
+<img src="./screenshots/notes_screen.png" width="200" alt="notes_screen">
+<img src="./screenshots/others_screen.png" width="200" alt="others_screen">
+</div>                                                                       
+</td>                                                         
+</table>
