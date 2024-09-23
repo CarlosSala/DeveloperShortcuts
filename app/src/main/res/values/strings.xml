@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Developer Shortcut</string>
+    <string name="app_name">Shortcuts</string>
     <string name="drawer_menu">Drawer menu</string>
     <string name="title_activity_splash">SplashActivity</string>
 </resources>

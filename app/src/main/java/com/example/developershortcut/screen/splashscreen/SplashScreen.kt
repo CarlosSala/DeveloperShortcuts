@@ -90,7 +90,7 @@ fun Splash() {
             enter = fadeIn(animationSpec = tween(500))
         ) {
             Text(
-                text = "Developer Shortcuts",
+                text = "Shortcuts",
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold
             )
