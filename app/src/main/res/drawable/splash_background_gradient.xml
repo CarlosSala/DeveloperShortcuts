@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <gradient
+                android:angle="270"
+                android:centerColor="#C0C0C0"
+                android:endColor="#A9A9A9"
+                android:startColor="#D3D3D3" />
+        </shape>
+    </item>
+    <item
+        android:width="84dp"
+        android:height="84dp"
+        android:padding="0dp"
+        android:drawable="@drawable/ic_app_shortcut_24"
+        android:gravity="center" />
+
+</layer-list>

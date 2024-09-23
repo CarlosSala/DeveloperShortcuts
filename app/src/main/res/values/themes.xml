@@ -4,6 +4,6 @@
     <style name="Theme.DeveloperShortcut" parent="android:Theme.Material.Light.NoActionBar" />
 
     <style name="Theme.MyApp.Splash" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowBackground">@drawable/splash_background_gradient</item>
     </style>
 </resources>
