@@ -42,7 +42,8 @@ import com.example.developershortcut.model.getActions
 @Composable
 fun IntentActionsScreen(
     modifier: Modifier = Modifier,
-    context: Context = LocalContext.current
+    context: Context = LocalContext.current,
+    onIntentActionCustom: (IntentActionModel) -> Unit
 ) {
     LazyVerticalGrid(
         modifier = modifier,
@@ -58,7 +59,9 @@ fun IntentActionsScreen(
                 MyActions(
                     context = context,
                     intentActionModel = item
-                )
+                ) {
+                    onIntentActionCustom(it)
+                }
             }
         }
     )
@@ -69,7 +72,8 @@ fun IntentActionsScreen(
 @Composable
 fun MyActions(
     context: Context,
-    intentActionModel: IntentActionModel
+    intentActionModel: IntentActionModel,
+    onIntentActionCustom: (IntentActionModel) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -113,6 +117,8 @@ fun MyActions(
                 onDismissRequest = { expanded = false }
             ) {
                 DropdownMenuItem(onClick = {
+
+                    onIntentActionCustom(intentActionModel)
                     expanded = false
                     // Acción 1 - Personalizar los parámetros del item
                     // Agregar la lógica para personalizar
@@ -135,5 +141,5 @@ fun myNavigation(context: Context, intentActionModel: IntentActionModel) {
 @Preview(showBackground = true)
 @Composable
 fun TestOneScreenPreview() {
-    IntentActionsScreen()
+    IntentActionsScreen(onIntentActionCustom = {})
 }

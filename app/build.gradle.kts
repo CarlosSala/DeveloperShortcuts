@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlinxSerialization)
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
 }
@@ -85,5 +86,8 @@ dependencies {
     implementation(libs.retrofit.gson)
     implementation(libs.okhttp)
     implementation(kotlin("script-runtime"))
+
+    implementation(libs.kotlinx.serialization.json)
+
 
 }

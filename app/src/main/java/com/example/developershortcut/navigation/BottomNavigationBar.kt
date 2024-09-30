@@ -8,7 +8,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
-import androidx.navigation.NavController
 import com.example.developershortcut.R
 
 
@@ -36,8 +35,8 @@ fun BottomNavigationBar(
                 )
             },
             label = { Text("Actions") },
-            selected = selectedScreen == AppScreens.TwoScreen,
-            onClick = { onItemSelected(AppScreens.TwoScreen) }
+            selected = selectedScreen == AppScreens.IntentActionsScreen,
+            onClick = { onItemSelected(AppScreens.IntentActionsScreen) }
         )
         NavigationBarItem(
             icon = {

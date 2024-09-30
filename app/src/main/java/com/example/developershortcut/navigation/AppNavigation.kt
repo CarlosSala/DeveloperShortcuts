@@ -7,9 +7,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.example.developershortcut.screen.fourscreen.TabRowManagerScreen
 import com.example.developershortcut.screen.onescreen.ShortcutsScreen
 import com.example.developershortcut.screen.threescreen.NoteScreen
+import com.example.developershortcut.screen.twoscreen.IntentActionScreenSettings
 import com.example.developershortcut.screen.twoscreen.IntentActionsScreen
 
 
@@ -31,12 +33,19 @@ fun AppNavigation(
                 modifier = modifier
             )
         }
-        composable(AppScreens.TwoScreen.route) {
+        composable(AppScreens.IntentActionsScreen.route) {
             IntentActionsScreen(
                 context = context,
                 modifier = modifier
-            )
+            ) {
+                navController.navigate(IntentActionsScreenSettings(it.id))
+            }
         }
+        composable<IntentActionsScreenSettings> { backStackEntry ->
+            val intentActionId = backStackEntry.toRoute<IntentActionsScreenSettings>()
+            IntentActionScreenSettings(intentActionModelId = intentActionId.intentActionId)
+        }
+
         composable(AppScreens.ThreeScreen.route) {
             NoteScreen(paddingValues)
         }
