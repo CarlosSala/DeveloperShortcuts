@@ -211,7 +211,12 @@ fun MainScreen() {
             }
         ) { paddingValues ->
 
-            AppNavigation(navController, context, paddingValues)
+            AppNavigation(
+                navController = navController,
+                context = context,
+                paddingValues = paddingValues,
+                modifier = Modifier.padding(paddingValues)
+            )
         }
     }
 }
