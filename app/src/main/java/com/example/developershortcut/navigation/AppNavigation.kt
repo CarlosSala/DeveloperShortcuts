@@ -26,10 +26,16 @@ fun AppNavigation(
         startDestination = AppScreens.OneScreen.route
     ) {
         composable(AppScreens.OneScreen.route) {
-            ShortcutsScreen(context = context, modifier = modifier)
+            ShortcutsScreen(
+                context = context,
+                modifier = modifier
+            )
         }
         composable(AppScreens.TwoScreen.route) {
-            IntentActionsScreen(context, paddingValues)
+            IntentActionsScreen(
+                context = context,
+                modifier = modifier
+            )
         }
         composable(AppScreens.ThreeScreen.route) {
             NoteScreen(paddingValues)
