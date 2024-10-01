@@ -9,10 +9,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.example.developershortcut.screen.fourscreen.TabRowManagerScreen
-import com.example.developershortcut.screen.onescreen.ShortcutsScreen
+import com.example.developershortcut.screen.shortcutsscreen.ShortcutsScreen
 import com.example.developershortcut.screen.threescreen.NoteScreen
-import com.example.developershortcut.screen.twoscreen.IntentActionScreenSettings
-import com.example.developershortcut.screen.twoscreen.IntentActionsScreen
+import com.example.developershortcut.screen.intentactionsscreen.IntentActionScreenSettings
+import com.example.developershortcut.screen.intentactionsscreen.IntentActionsScreen
 
 
 @Composable
@@ -20,7 +20,8 @@ fun AppNavigation(
     navController: NavHostController,
     context: Context,
     paddingValues: PaddingValues,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onTitle: (String) -> Unit
 ) {
 
     NavHost(
@@ -31,15 +32,20 @@ fun AppNavigation(
             ShortcutsScreen(
                 context = context,
                 modifier = modifier
-            )
+            ) { title ->
+                onTitle(title)
+            }
         }
         composable(AppScreens.IntentActionsScreen.route) {
             IntentActionsScreen(
                 context = context,
-                modifier = modifier
-            ) {
-                navController.navigate(IntentActionsScreenSettings(it.id))
-            }
+                modifier = modifier,
+                onIntentActionCustom = { item ->
+                    navController.navigate(IntentActionsScreenSettings(intentActionId = item.id))
+                }, onTitle = { title ->
+                    onTitle(title)
+                }
+            )
         }
         composable<IntentActionsScreenSettings> { backStackEntry ->
             val intentActionId = backStackEntry.toRoute<IntentActionsScreenSettings>()

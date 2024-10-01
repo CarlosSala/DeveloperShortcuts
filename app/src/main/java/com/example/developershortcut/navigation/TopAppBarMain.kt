@@ -20,13 +20,14 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBarMain(drawerState: DrawerState, openDrawer: (DrawerState) -> Unit) {
+fun TopAppBarMain(title: String, drawerState: DrawerState, openDrawer: (DrawerState) -> Unit) {
 
     val scope = rememberCoroutineScope()
 
     TopAppBar(
         title = {
-            Text(text = stringResource(id = R.string.drawer_menu))
+            // Text(text = stringResource(id = R.string.drawer_menu))
+            Text(text = title)
         },
         navigationIcon = {
             IconButton(onClick = {

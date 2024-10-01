@@ -80,6 +80,7 @@ fun MainScreen() {
     var selectedItem by remember { mutableStateOf(drawerItem[0]) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    var topAppBarTitle by remember { mutableStateOf("") }
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -192,7 +193,10 @@ fun MainScreen() {
     ) {
         Scaffold(
             topBar = {
-                TopAppBarMain(drawerState) {
+                TopAppBarMain(
+                    title = topAppBarTitle,
+                    drawerState = drawerState
+                ) {
                     scope.launch {
                         it.open()
                     }
@@ -216,7 +220,9 @@ fun MainScreen() {
                 context = context,
                 paddingValues = paddingValues,
                 modifier = Modifier.padding(paddingValues)
-            )
+            ) { title ->
+                topAppBarTitle = title
+            }
         }
     }
 }
