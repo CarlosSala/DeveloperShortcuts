@@ -1,4 +1,4 @@
-package com.example.developershortcut.screen.threescreen
+package com.example.developershortcut.screen.notesscreen
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

@@ -10,7 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.example.developershortcut.screen.fourscreen.TabRowManagerScreen
 import com.example.developershortcut.screen.shortcutsscreen.ShortcutsScreen
-import com.example.developershortcut.screen.threescreen.NoteScreen
+import com.example.developershortcut.screen.notesscreen.NotesScreen
 import com.example.developershortcut.screen.intentactionsscreen.IntentActionScreenSettings
 import com.example.developershortcut.screen.intentactionsscreen.IntentActionsScreen
 
@@ -53,7 +53,9 @@ fun AppNavigation(
         }
 
         composable(AppScreens.ThreeScreen.route) {
-            NoteScreen(paddingValues)
+            NotesScreen(modifier) { title ->
+                onTitle(title)
+            }
         }
         composable(AppScreens.FourScreen.route) {
             TabRowManagerScreen(paddingValues)
