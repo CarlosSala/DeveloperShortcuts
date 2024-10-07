@@ -17,13 +17,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,14 +41,20 @@ import com.example.developershortcut.data.database.entities.NoteEntity
 @Preview
 @Composable
 fun NotesScreenPreview() {
-    NotesScreen(onTitle = {})
+    NotesScreen(
+        onTitle = {},
+        onFabClicked = false,
+        onDialogClose = {}
+    )
 }
 
 @Composable
 fun NotesScreen(
     modifier: Modifier = Modifier,
     viewModel: NoteViewModel = viewModel(),
-    onTitle: (String) -> Unit
+    onFabClicked: Boolean,
+    onTitle: (String) -> Unit,
+    onDialogClose: (Boolean) -> Unit
 ) {
 
     val title = "Notes"
@@ -57,57 +62,58 @@ fun NotesScreen(
 
     var showCreateDialog by remember { mutableStateOf(false) }
 
-    Scaffold(
+    LaunchedEffect(onFabClicked) {
+        showCreateDialog = onFabClicked
+    }
+
+    Column(
         modifier = modifier,
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { showCreateDialog = true }
-            ) {
-                Text("+")
-            }
-        }
-    ) { padding ->
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        // Spacer(modifier = Modifier.height(2.dp))
 
-        Column(
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Spacer(modifier = Modifier.height(16.dp))
+        TextList(viewModel)
 
-            TextEntriesList(viewModel)
-
-            if (showCreateDialog) {
-                CreateNoteDialog(
-                    onDismiss = { showCreateDialog = false },
-                    onSave = { title, body ->
-                        // Save note here
-                        viewModel.addNote(NoteEntity(title, body))
-                        showCreateDialog = false
-                    }
-                )
-            }
+        if (showCreateDialog) {
+            CreateNoteDialog(
+                onDismiss = {
+                    showCreateDialog = false
+                    onDialogClose(false)
+                },
+                onSave = { title, body ->
+                    // Save note here
+                    viewModel.addNote(NoteEntity(title, body))
+                    showCreateDialog = false
+                    onDialogClose(false)
+                }
+            )
         }
     }
 }
 
+@Preview
+@Composable
+fun CreateNoteDialogPreview() {
+    CreateNoteDialog(
+        onSave = { myString1, myString2 -> },
+        onDismiss = {}
+    )
+}
 
 @Composable
-fun CreateNoteDialog(onDismiss: () -> Unit, onSave: (String, String) -> Unit) {
-
+fun CreateNoteDialog(
+    onDismiss: () -> Unit,
+    onSave: (String, String) -> Unit
+) {
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(400.dp),
             shape = MaterialTheme.shapes.medium,
-            // color = MaterialTheme.colors.background
         ) {
             Column(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxSize()
+                modifier = Modifier.padding(16.dp)
             ) {
                 var title by remember { mutableStateOf("") }
                 var body by remember { mutableStateOf("") }
@@ -118,7 +124,7 @@ fun CreateNoteDialog(onDismiss: () -> Unit, onSave: (String, String) -> Unit) {
                     value = title,
                     onValueChange = { title = it },
                     label = { Text("Title") },
-                    modifier = Modifier.fillMaxWidth()
+                    maxLines = 1
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 TextField(
@@ -131,17 +137,14 @@ fun CreateNoteDialog(onDismiss: () -> Unit, onSave: (String, String) -> Unit) {
                     maxLines = 10
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier.align(Alignment.End)
-                ) {
+                Row(modifier = Modifier.align(Alignment.End)) {
                     Button(onClick = onDismiss) {
                         Text("Cancel")
                     }
                     Spacer(modifier = Modifier.width(8.dp))
-                    Button(
-                        onClick = {
-                            onSave(title, body)
-                        }
+                    Button(onClick = {
+                        onSave(title, body)
+                    }
                     ) {
                         Text("Save")
                     }
@@ -152,7 +155,7 @@ fun CreateNoteDialog(onDismiss: () -> Unit, onSave: (String, String) -> Unit) {
 }
 
 @Composable
-fun TextEntriesList(viewModel: NoteViewModel) {
+fun TextList(viewModel: NoteViewModel) {
 
     val textEntries by viewModel.allNoteEntity.collectAsState(initial = emptyList())
 
@@ -162,7 +165,6 @@ fun TextEntriesList(viewModel: NoteViewModel) {
         verticalArrangement = Arrangement.spacedBy(1.dp),
     ) {
         items(textEntries) { item ->
-
             ShowItems(item, viewModel)
         }
     }
@@ -181,8 +183,8 @@ fun ShowItems(
 
     Card(
         modifier = Modifier
-            .padding(1.dp)
             .fillMaxWidth(0.95f)
+            .padding(1.dp)
             .combinedClickable(
                 onClick = {
                     noteToUpdate = note
@@ -191,13 +193,11 @@ fun ShowItems(
                 onLongClick = {
                     noteToDelete = note
                     showDialogDelete = true
-                    // onLongClick = { viewModel.deleteNote(note)})
-                    // viewModel.deleteNote(note)
-                })
+                }
+            )
     ) {
         Column(
-            modifier = Modifier
-                .padding(vertical = 24.dp, horizontal = 32.dp)
+            modifier = Modifier.padding(vertical = 24.dp, horizontal = 32.dp)
         ) {
             Text(
                 text = note.title,
@@ -214,13 +214,13 @@ fun ShowItems(
 
     if (showDialogUpdate) {
         noteToUpdate?.let { currentNote ->
-            NoteUpdateDialog(currentNote,
+            NoteUpdateDialog(
+                note = currentNote,
                 onDismiss = { showDialogUpdate = false },
                 onUpdate = { title, description ->
                     // update note here
                     currentNote.title = title
                     currentNote.description = description
-
                     viewModel.updateNote(currentNote)
                     showDialogUpdate = false
                 }
@@ -245,26 +245,22 @@ fun ShowItems(
 
 @Composable
 fun NoteUpdateDialog(
-    noteEntity: NoteEntity,
+    note: NoteEntity,
     onDismiss: () -> Unit,
     onUpdate: (String, String) -> Unit
 ) {
-
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(400.dp),
             shape = MaterialTheme.shapes.medium,
-            // color = MaterialTheme.colors.background
         ) {
             Column(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxSize()
+                modifier = Modifier.padding(16.dp)
             ) {
-                var title by remember { mutableStateOf(noteEntity.title) }
-                var body by remember { mutableStateOf(noteEntity.description) }
+                var title by remember { mutableStateOf(note.title) }
+                var body by remember { mutableStateOf(note.description) }
 
                 Text(text = "Update Note")
                 Spacer(modifier = Modifier.height(16.dp))
@@ -272,7 +268,7 @@ fun NoteUpdateDialog(
                     value = title,
                     onValueChange = { title = it },
                     label = { Text("Title") },
-                    modifier = Modifier.fillMaxWidth()
+                    maxLines = 1
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 TextField(
@@ -285,9 +281,7 @@ fun NoteUpdateDialog(
                     maxLines = 10
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier.align(Alignment.End)
-                ) {
+                Row(modifier = Modifier.align(Alignment.End)) {
                     Button(onClick = onDismiss) {
                         Text("Cancel")
                     }
@@ -313,12 +307,8 @@ fun ConfirmDeleteDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = {
-            Text(text = "Confirm Deletion")
-        },
-        text = {
-            Text("Are you sure you want to delete the note ${note.title} ?")
-        },
+        title = { Text(text = "Confirm Deletion") },
+        text = { Text("Are you sure you want to delete the note ${note.title} ?") },
         confirmButton = {
             Button(onClick = onConfirm) {
                 Text("Confirm")

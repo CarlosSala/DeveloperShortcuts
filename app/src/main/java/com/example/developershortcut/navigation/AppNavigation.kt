@@ -21,7 +21,9 @@ fun AppNavigation(
     context: Context,
     paddingValues: PaddingValues,
     modifier: Modifier = Modifier,
-    onTitle: (String) -> Unit
+    onFabClicked: Boolean,
+    onTitle: (String) -> Unit,
+    onDialogClose: (Boolean) -> Unit
 ) {
 
     NavHost(
@@ -52,10 +54,17 @@ fun AppNavigation(
             IntentActionScreenSettings(intentActionModelId = intentActionId.intentActionId)
         }
 
-        composable(AppScreens.ThreeScreen.route) {
-            NotesScreen(modifier) { title ->
-                onTitle(title)
-            }
+        composable(AppScreens.NotesScreen.route) {
+            NotesScreen(
+                modifier = modifier,
+                onFabClicked = onFabClicked,
+                onTitle = { title ->
+                    onTitle(title)
+                },
+                onDialogClose = {
+                    onDialogClose(it)
+                }
+            )
         }
         composable(AppScreens.FourScreen.route) {
             TabRowManagerScreen(paddingValues)

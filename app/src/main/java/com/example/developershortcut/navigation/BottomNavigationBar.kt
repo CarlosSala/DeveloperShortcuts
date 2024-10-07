@@ -1,6 +1,5 @@
 package com.example.developershortcut.navigation
 
-import android.graphics.Color.rgb
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Icon
@@ -8,7 +7,6 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.developershortcut.R
@@ -57,8 +55,8 @@ fun BottomNavigationBar(
                 )
             },
             label = { Text("Notes") },
-            selected = selectedScreen == AppScreens.ThreeScreen,
-            onClick = { onItemSelected(AppScreens.ThreeScreen) }
+            selected = selectedScreen == AppScreens.NotesScreen,
+            onClick = { onItemSelected(AppScreens.NotesScreen) }
         )
         NavigationBarItem(
             icon = {

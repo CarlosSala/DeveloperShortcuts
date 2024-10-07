@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
@@ -81,6 +82,7 @@ fun MainScreen() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var topAppBarTitle by remember { mutableStateOf("") }
+    var fabState by remember { mutableStateOf(false) }
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -202,6 +204,14 @@ fun MainScreen() {
                     }
                 }
             },
+            floatingActionButton = {
+                if (selectedScreen == AppScreens.NotesScreen)
+                    FloatingActionButton(
+                        onClick = { fabState = true },
+                    ) {
+                        Text("+")
+                    }
+            },
             bottomBar = {
                 BottomNavigationBar(selectedScreen) { screen ->
                     selectedScreen = screen
@@ -219,10 +229,14 @@ fun MainScreen() {
                 navController = navController,
                 context = context,
                 paddingValues = paddingValues,
-                modifier = Modifier.padding(paddingValues)
-            ) { title ->
-                topAppBarTitle = title
-            }
+                modifier = Modifier.padding(paddingValues),
+                onFabClicked = fabState,
+                onTitle = { title ->
+                    topAppBarTitle = title
+                }, onDialogClose = {
+                    fabState = it
+                }
+            )
         }
     }
 }
@@ -234,7 +248,6 @@ fun MainScreenPreview() {
 }
 
 data class DrawerItems(
-
     val icon: ImageVector,
     val text: String,
     val badgeCount: Int,
