@@ -1,8 +1,10 @@
 package com.example.developershortcut.screen.notesscreen
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -159,13 +161,22 @@ fun TextList(viewModel: NoteViewModel) {
 
     val textEntries by viewModel.allNoteEntity.collectAsState(initial = emptyList())
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(1.dp),
-    ) {
-        items(textEntries) { item ->
-            ShowItems(item, viewModel)
+    if (textEntries.isEmpty()) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text(text = "There isn't notes")
+        }
+    } else {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(1.dp),
+        ) {
+            items(
+                items = textEntries,
+                key = { it.id }
+            ) { item ->
+                ShowItems(item, viewModel)
+            }
         }
     }
 }
@@ -195,6 +206,7 @@ fun ShowItems(
                     showDialogDelete = true
                 }
             )
+        // .animateContentSize()
     ) {
         Column(
             modifier = Modifier.padding(vertical = 24.dp, horizontal = 32.dp)

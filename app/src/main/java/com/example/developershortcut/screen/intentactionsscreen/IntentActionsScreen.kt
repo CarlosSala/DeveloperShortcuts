@@ -61,7 +61,10 @@ fun IntentActionsScreen(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         content = {
-            items(getActions()) { item ->
+            items(
+                items = getActions(),
+                key = { it.id }
+            ) { item ->
                 Actions(
                     context = context,
                     intentActionModel = item

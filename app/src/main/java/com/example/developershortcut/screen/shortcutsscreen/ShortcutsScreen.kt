@@ -49,7 +49,10 @@ fun ShortcutsScreen(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(getShortcuts()) { item ->
+        items(
+            items = getShortcuts(),
+            key = { it.id }
+        ) { item ->
             Shortcuts(context, item)
         }
     }
